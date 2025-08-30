@@ -1,3 +1,7 @@
+/*!
+    \file
+*/
+
 #include <stdio.h>//Все функции с телами и объявлениями
 #include <stdlib.h>
 #include <math.h>
@@ -5,6 +9,7 @@
 #include "structs.h"
 #include "CompareFunctions.h"
 
+//TODO: enum CompareResult {More, Less, Equal }
 
 int CompareDoubles (double a, double b) {
     if (fabs(a-b) < EPS) {
@@ -12,8 +17,7 @@ int CompareDoubles (double a, double b) {
     }
     else if (a-b > EPS) {
         return 0;
-    }
-    else {
+    } else {
         return -1;
     }
 }
@@ -29,6 +33,7 @@ int CompareWithZero (double a) {
         return -1;
     }
 }
+
 
 
 int CompareStructures (struct roots AfterSolving, struct roots MyRootsExpected) {

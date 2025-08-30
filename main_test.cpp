@@ -1,3 +1,7 @@
+/*!
+    \file
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,19 +15,16 @@ int main(){
     int nRoots = -2;
 
     fseek(fp, 0L, SEEK_END);
-    int n = ftell(fp); //размер файла
-    fseek(fp, 0L, SEEK_SET); //курсор обратно
-
-    char *ptr = (char*) calloc(n, sizeof(char));//выделяем память
-
-    size_t read_size =  fread(ptr, sizeof(char), n, fp); // передаем в массив
-    if (read_size != (size_t) n) { //fread - размер байтов
+    int n = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
+    char *ptr = (char*) calloc(n, sizeof(char));
+    size_t read_size =  fread(ptr, sizeof(char), n, fp);
+    if (read_size != (size_t) n) {
         printf("error\n");
         return 0;
     }
     int n_symbols_read = 0;
     while(1) {
-        // %n
         int current_shift = 0;
         if (sscanf(ptr+n_symbols_read, "%lf %lf %lf %d %n", &a, &b, &c, &nRoots, &current_shift) == EOF){
             printf("%lf %lf %lf %d %d\n", a, b, c, nRoots, n_symbols_read);

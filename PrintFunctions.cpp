@@ -1,3 +1,7 @@
+/*!
+    \file
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -8,30 +12,18 @@
 int PrintResults (const struct roots MyRoots) {
     switch (MyRoots.nRoots) {
         case NO_ROOTS:
-            ColorOut();
-            printf("Quadratic equation has no roots\n");
+            printf(RED_COLOR "Quadratic equation has no roots\n" RESET_COLOR);
             break;
         case ONE_ROOT:
-            ColorOut();
-            printf("Quadratic equation has one root %lf\n", MyRoots.x1);
+            printf(PURPLE_COLOR "Quadratic equation has one root %lf\n" RESET_COLOR, MyRoots.x1);
             break;
         case TWO_ROOTS:
-            ColorOut();
-            printf("Quadratic equation has two roots %lf, %lf\n", MyRoots.x1, MyRoots.x2);
+            printf(PURPLE_COLOR "Quadratic equation has two roots %lf, %lf\n" RESET_COLOR, MyRoots.x1, MyRoots.x2);
             break;
         case INF_ROOTS:
-         ColorOut();
-            printf("Quadratic equation has infinity roots\n");
+            printf(RED_COLOR "Quadratic equation has infinity roots\n" RESET_COLOR);
             break;
         default: break;
     }
     return 0;
-}
-
-void ColorOut() {
-    HANDLE hConsole;
-    int k = (1 + rand()) % 255;
-
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, k);
 }

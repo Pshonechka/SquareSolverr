@@ -1,3 +1,7 @@
+/*!
+    \file
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -7,10 +11,18 @@
 #include "CompareFunctions.h"
 #include "TestFunctions.h"
 
+int IsDouble (double a) {
+    if (isnan(a) || isinf(a)) {
+        return 0;
+    }
+    return 1;
+}
+
+
 int OneTest (struct coef MyCoeff1, struct roots MyRootsExpected) {
     struct roots AfterSolving = {NAN, NAN, ERROR_ROOTS};
     SquareSolver(MyCoeff1, &AfterSolving);
-    int c=1;
+    int c = 1;
     switch (MyRootsExpected.nRoots) {
         case NO_ROOTS:
             if (AfterSolving.nRoots == NO_ROOTS)
@@ -36,7 +48,7 @@ int OneTest (struct coef MyCoeff1, struct roots MyRootsExpected) {
 
 
 void RunTest(struct coef MyCoeff1, struct roots MyRootsExpected) {
-    if (OneTest(MyCoeff1, MyRootsExpected) == 0){
+    if (OneTest(MyCoeff1, MyRootsExpected) == 0) {
         printf("ok\n");
     } else {
         printf("ne ok\n");
@@ -53,17 +65,16 @@ int UnitTests(){
     }
 
     fseek(fp, 0L, SEEK_END);
-    int n = ftell(fp); //размер файла
-    fseek(fp, 0L, SEEK_SET); //курсор обратно
+    int n = ftell(fp);
+    fseek(fp, 0L, SEEK_SET);
 
-    char *ptr = (char*) calloc(n, sizeof(char));//выделяем память
-
+    char *ptr = (char*) calloc(n, sizeof(char));
     if ( (char*) calloc(n, sizeof(char)) == NULL) {
         printf("Error in opening file\n");
         return 0;
     }
-    size_t read_size =  fread(ptr, sizeof(char), n, fp); // передаем в массив
-    if (read_size != (size_t) n) { //fread - размер байтов
+    size_t read_size =  fread(ptr, sizeof(char), n, fp);
+    if (read_size != (size_t) n) {
         printf("Error in opening file\n");
         return 0;
     }
@@ -72,7 +83,6 @@ int UnitTests(){
     while(1) {
         coeff = {.a=NAN, .b=NAN, .c=NAN};
         fxx = {.x1=NAN, .x2=NAN, .nRoots=ERROR_ROOTS};
-        // %n
         int current_shift = 0;
         if (sscanf(ptr+n_symbols_read, "%lf %lf %lf %d %n", &(coeff.a), &(coeff.b), &(coeff.c), &(fxx.nRoots), &current_shift) == EOF){
             break;

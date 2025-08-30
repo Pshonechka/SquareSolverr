@@ -1,19 +1,30 @@
+/*!
+    \file
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <assert.h>
 
 #include "structs.h"
 #include "CompareFunctions.h"
 #include "SolverFunctions.h"
-
+#include "TestFunctions.h"
 
 int SquareSolver (struct coef MyCoeff, struct roots *MyRoots) {
     double a = MyCoeff.a;
+    assert(IsDouble (a));
     double b = MyCoeff.b;
+    assert(IsDouble (b));
     double c = MyCoeff.c;
+    assert(IsDouble (c));
     double *x1 = &(MyRoots->x1);
+    assert(x1 != NULL);
     double *x2 = &(MyRoots->x2);
+    assert(x2 != NULL);
     int *nRoots = &(MyRoots->nRoots);
+    assert(nRoots != NULL);
     *nRoots = ERROR_ROOTS;
     if (CompareWithZero(a) == 1) {
         if (CompareWithZero(b) == 1) {
